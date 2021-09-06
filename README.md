@@ -1,60 +1,85 @@
-# template-for-proposals
+# Introduction
+**Hello,**
 
-A repository template for ECMAScript proposals.
+**I had an idea to allow returns from statements and decided to do a research and found Do Expression proposal very similar and more complex than my idea.**
 
-## Before creating a proposal
+**My idea is basically to create a new keyword syntax as a shortcut for an executed arrow function. It behaves same as arrow function.**
 
-Please ensure the following:
-  1. You have read the [process document](https://tc39.github.io/process-document/)
-  1. You have reviewed the [existing proposals](https://github.com/tc39/proposals/)
-  1. You are aware that your proposal requires being a member of TC39, or locating a TC39 delegate to "champion" your proposal
+# Examples:
+```ts
+const 
+ a=1,
+ b = do if(a) return 1; else return 0;;
+```
 
-## Create your proposal repo
+# Transpilation:
 
-Follow these steps:
-  1.  Click the green ["use this template"](https://github.com/tc39/template-for-proposals/generate) button in the repo header. (Note: Do not fork this repo in GitHub's web interface, as that will later prevent transfer into the TC39 organization)
-  1.  Go to your repo settings “Options” page, under “GitHub Pages”, and set the source to the **main branch** under the root (and click Save, if it does not autosave this setting)
-      1. check "Enforce HTTPS"
-      1. On "Options", under "Features", Ensure "Issues" is checked, and disable "Wiki", and "Projects" (unless you intend to use Projects)
-      1. Under "Merge button", check "automatically delete head branches"
-<!--
-  1.  Avoid merge conflicts with build process output files by running:
-      ```sh
-      git config --local --add merge.output.driver true
-      git config --local --add merge.output.driver true
-      ```
-  1.  Add a post-rewrite git hook to auto-rebuild the output on every commit:
-      ```sh
-      cp hooks/post-rewrite .git/hooks/post-rewrite
-      chmod +x .git/hooks/post-rewrite
-      ```
--->
-  3.  ["How to write a good explainer"][explainer] explains how to make a good first impression.
+```ts
+const 
+ a=1,
+ b = (()=> {if(a) return 1; else return 2})();
+```
 
-      > Each TC39 proposal should have a `README.md` file which explains the purpose
-      > of the proposal and its shape at a high level.
-      >
-      > ...
-      >
-      > The rest of this page can be used as a template ...
+**We can also use alternative names or keywords for this new feature.**
+# Examples:
+- ->
+- => (preceded by an expression and followed by a block or a statement)
 
-      Your explainer can point readers to the `index.html` generated from `spec.emu`
-      via markdown like
+```ts
+const 
+ a=1,
+ b = -> if(a) return 1; else return 0;;
+```
+```ts
+const 
+ a=1,
+ b = => if(a) return 1; else return 0;;
+```
+Or
+```ts
+const 
+ a=1,
+ b = =>{ if(a) return 1; else return 0;};
+```
+### We might call `=>` syntax a *Immediately Executed Arrow Function*
 
-      ```markdown
-      You can browse the [ecmarkup output](https://ACCOUNT.github.io/PROJECT/)
-      or browse the [source](https://github.com/ACCOUNT/PROJECT/blob/HEAD/spec.emu).
-      ```
+**We can even pass parameters as an object:**
+```ts
+const 
+ a=1,
+ b = {value:a} => if(value) return value; else return 0;
+```
 
-      where *ACCOUNT* and *PROJECT* are the first two path elements in your project's Github URL.
-      For example, for github.com/**tc39**/**template-for-proposals**, *ACCOUNT* is "tc39"
-      and *PROJECT* is "template-for-proposals".
+## Match Example:
+```ts
+const a=1,b=2;
+const c = 
+    {a,b}=> {
+        if(a) return a; 
+        else if(b) return b; 
+        else return 0;
+    }
+console.log(c)
+```
+## Pipe and Chaining Example
+**Consecutive chains inherit the single parameter of single field object of parent chain, each assigning return value to that single field object property and passing that as parameters to next chain. We can enforce rule for my proposal to only have one object with one field as the parameter, that field can be be assigned as any object of course.**
+```ts
+const value=1;
+const c = {value} 
+    => value+1
+    => value+1
+    => value+2
+console.log(c) //5
+```
+*Alternative Syntax:*
+```ts
+const c = value
+    -> value+1
+    -> value+1
+    -> value+2
+console.log(c) //5
+```
+**We can of course discuss the syntax, my proposal has 3 suggestions: =>, ->, do. The reason I prefer => is because my method is actually based on anonymous method, just immediately executed, and allowing flexibility.**
 
+Thank you,
 
-## Maintain your proposal repo
-
-  1. Make your changes to `spec.emu` (ecmarkup uses HTML syntax, but is not HTML, so I strongly suggest not naming it ".html")
-  1. Any commit that makes meaningful changes to the spec, should run `npm run build` and commit the resulting output.
-  1. Whenever you update `ecmarkup`, run `npm run build` and commit any changes that come from that dependency.
-
-  [explainer]: https://github.com/tc39/how-we-work/blob/HEAD/explainer.md
