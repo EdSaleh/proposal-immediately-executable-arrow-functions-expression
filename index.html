@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/base16/solarized-light.min.css"><link rel="stylesheet" href="./spec.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
 <script src="./spec.js"></script>
-<title>Proposal Title Goes Here</title><script>'use strict';
+<title>Immediately Executed Arrow Function</title><script>'use strict';
 let sdoBox = {
   init() {
     this.$alternativeId = null;
@@ -2290,7 +2290,7 @@ li.menu-search-result-term:before {
 .clause-attributes-tag a {
   color: #884400;
 }
-</style></head><body><div id="menu-toggle">☰</div><div id="menu-spacer"></div><div id="menu"><div id="menu-search"><input type="text" id="menu-search-box" placeholder="Search..."><div id="menu-search-results" class="inactive"></div></div><div id="menu-pins"><div class="menu-pane-header">Pins</div><ul id="menu-pins-list"></ul></div><div class="menu-pane-header">Table of Contents</div><div id="menu-toc"><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-demo-clause" title="This is an emu-clause"><span class="secnum">1</span> This is an emu-clause</a></li><li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">A</span> Copyright &amp; Software License</a></li></ol></div></div><div id="spec-container"><h1 class="version">Stage -1 Draft / September 6, 2021</h1><h1 class="title">Proposal Title Goes Here</h1>
+</style></head><body><div id="menu-toggle">☰</div><div id="menu-spacer"></div><div id="menu"><div id="menu-search"><input type="text" id="menu-search-box" placeholder="Search..."><div id="menu-search-results" class="inactive"></div></div><div id="menu-pins"><div class="menu-pane-header">Pins</div><ul id="menu-pins-list"></ul></div><div class="menu-pane-header">Table of Contents</div><div id="menu-toc"><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-demo-clause" title="This is an emu-clause"><span class="secnum">1</span> This is an emu-clause</a></li><li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">A</span> Copyright &amp; Software License</a></li></ol></div></div><div id="spec-container"><h1 class="version">Stage 4 Draft / September 6, 2021</h1><h1 class="title">Immediately Executed Arrow Function</h1>
 
 <emu-clause id="sec-demo-clause">
   <h1><span class="secnum">1</span> This is an emu-clause</h1>
@@ -2300,7 +2300,7 @@ li.menu-search-result-term:before {
       <h1><span class="secnum">A</span> Copyright &amp; Software License</h1>
       
       <h2>Copyright Notice</h2>
-      <p>© 2021 Your Name(s) Here</p>
+      <p>© 2021 EdSaleh</p>
 
       <h2>Software License</h2>
       <p>All Software contained in this document ("Software") is protected by copyright and is being made available under the "BSD License", included below. This Software may be subject to third party rights (rights from parties other than Ecma International), including patent rights, and no licenses under such third party rights are granted under this license even if the third party concerned is a member of Ecma International. SEE THE ECMA CODE OF CONDUCT IN PATENT MATTERS AVAILABLE AT https://ecma-international.org/memento/codeofconduct.htm FOR INFORMATION REGARDING THE LICENSING OF PATENT CLAIMS THAT ARE REQUIRED TO IMPLEMENT ECMA INTERNATIONAL STANDARDS.</p>
@@ -2316,4 +2316,63 @@ li.menu-search-result-term:before {
 <p>THIS SOFTWARE IS PROVIDED BY THE ECMA INTERNATIONAL "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ECMA INTERNATIONAL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 
     </emu-annex>
+
+<h1 id="introduction">Introduction</h1>
+<p><strong>Hello,</strong></p>
+<p><strong>I had an idea to allow returns from statements and decided to do a research and found Do Expression proposal very similar and more complex than my idea.</strong></p>
+<p><strong>My idea is basically to create a new <emu-xref href="#sec-keywords-and-reserved-words"><a href="https://tc39.es/ecma262/#sec-keywords-and-reserved-words">keyword</a></emu-xref> syntax as a shortcut for an executed arrow function. It behaves same as arrow function.</strong></p>
+<h1 id="examples-">Examples:</h1>
+<pre><code class="lang-ts hljs"><span class="hljs-keyword">const</span> 
+ a=<span class="hljs-number">1</span>,
+ b = <span class="hljs-keyword">do</span> <span class="hljs-keyword">if</span>(a) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;;</code></pre>
+<h1 id="transpilation-">Transpilation:</h1>
+<pre><code class="lang-ts hljs"><span class="hljs-keyword">const</span> 
+ a=<span class="hljs-number">1</span>,
+ b = (<span class="hljs-function">()=&gt;</span> {<span class="hljs-keyword">if</span>(a) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>})();</code></pre>
+<p><strong>We can also use alternative names or keywords for this new feature.</strong></p>
+<h1 id="examples-">Examples:</h1>
+<ul>
+<li>-&gt;</li>
+<li>=&gt; (preceded by an expression and followed by a block or a statement)</li>
+</ul>
+<pre><code class="lang-ts hljs"><span class="hljs-keyword">const</span> 
+ a=<span class="hljs-number">1</span>,
+ b = -&gt; <span class="hljs-keyword">if</span>(a) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;;</code></pre>
+<pre><code class="lang-ts hljs"><span class="hljs-keyword">const</span> 
+ a=<span class="hljs-number">1</span>,
+ b = =&gt; <span class="hljs-keyword">if</span>(a) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;;</code></pre>
+<p>Or</p>
+<pre><code class="lang-ts hljs"><span class="hljs-keyword">const</span> 
+ a=<span class="hljs-number">1</span>,
+ b = =&gt;{ <span class="hljs-keyword">if</span>(a) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;};</code></pre>
+<h3 id="we-might-call-syntax-a-immediately-executed-arrow-function-">We might call <code>=&gt;</code> syntax a <em>Immediately Executed Arrow Function</em></h3>
+<p><strong>We can even pass parameters as an object:</strong></p>
+<pre><code class="lang-ts hljs"><span class="hljs-keyword">const</span> 
+ a=<span class="hljs-number">1</span>,
+ b = {<span class="hljs-attr">value</span>:a} =&gt; <span class="hljs-keyword">if</span>(value) <span class="hljs-keyword">return</span> value; <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</code></pre>
+<h2 id="match-example-">Match Example:</h2>
+<pre><code class="lang-ts hljs"><span class="hljs-keyword">const</span> a=<span class="hljs-number">1</span>,b=<span class="hljs-number">2</span>;
+<span class="hljs-keyword">const</span> c = 
+    {a,b}=&gt; {
+        <span class="hljs-keyword">if</span>(a) <span class="hljs-keyword">return</span> a; 
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(b) <span class="hljs-keyword">return</span> b; 
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    }
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(c)</code></pre>
+<h2 id="pipe-and-chaining-example">Pipe and Chaining Example</h2>
+<p><strong>Consecutive chains inherit the single parameter of single field object of parent chain, each assigning return value to that single field object property and passing that as parameters to next chain. We can enforce rule for my proposal to only have one object with one field as the parameter, that field can be be assigned as any object of course.</strong></p>
+<pre><code class="lang-ts hljs"><span class="hljs-keyword">const</span> value=<span class="hljs-number">1</span>;
+<span class="hljs-keyword">const</span> c = {value} 
+    =&gt; value+<span class="hljs-number">1</span>
+    =&gt; value+<span class="hljs-number">1</span>
+    =&gt; value+<span class="hljs-number">2</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(c) <span class="hljs-comment">//5</span></code></pre>
+<p><em>Alternative Syntax:</em></p>
+<pre><code class="lang-ts hljs"><span class="hljs-keyword">const</span> c = value
+    -&gt; value+<span class="hljs-number">1</span>
+    -&gt; value+<span class="hljs-number">1</span>
+    -&gt; value+<span class="hljs-number">2</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(c) <span class="hljs-comment">//5</span></code></pre>
+<p><strong>We can of course discuss the syntax, my proposal has 3 suggestions: =&gt;, -&gt;, do. The reason I prefer =&gt; is because my method is actually based on anonymous method, just immediately executed, and allowing flexibility.</strong></p>
+<p>Thank you,</p>
 </div></body>
