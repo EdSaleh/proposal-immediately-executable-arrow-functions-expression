@@ -41,7 +41,7 @@ const
  a=1,
  b = =>{ if(a) return 1; else return 0;};
 ```
-### We might call `=>` syntax a *Immediately Executed Arrow Function*
+### We might call `=>` syntax a *Immediately Executable Arrow Function(s)*
 
 **We can even pass parameters as an object:**
 ```ts
