@@ -41,15 +41,7 @@ const
  a=1,
  b = =>{ if(a) return 1; else return 0;};
 ```
-
-Or
-```ts
-const 
- a=1,
- b = do ()=>{ if(a) return 1; else return 0;} => {}...;
-```
-
-### We might call `=>` syntax a *Immediately Executable Arrow Function(s)*
+### We might call `=>` syntax a *Immediately Executed Arrow Function*
 
 **We can even pass parameters as an object:**
 ```ts
@@ -87,7 +79,9 @@ const c = value
     -> value+2
 console.log(c) //5
 ```
+We can use for chaining ==> syntax to avoid specifying the parameter with the method:
+`{value} ==> Filter ==> Map` = `{value} => Filter(value) => Map(value)`
+
 **We can of course discuss the syntax, my proposal has 3 suggestions: =>, ->, do. The reason I prefer => is because my method is actually based on anonymous method, just immediately executed, and allowing flexibility.**
 
 Thank you,
-
